@@ -75,7 +75,7 @@ public class AccountService {
     public AccountDetail getAccountDetails(String accountId) {
         AccountEntity accountEntity = accountRepository.getOne(accountId);
 
-        AccountDetail accountDetail = (AccountDetail) mapTo(accountEntity);
+        AccountDetail accountDetail = mapToDetail(accountEntity);
         accountDetail.setCustomer(getCustomer(accountEntity.getCustomerId()));
         return accountDetail;
     }
@@ -86,7 +86,7 @@ public class AccountService {
         return accountEntities
                 .parallelStream()
                 .map(entity -> {
-                    AccountDetail accountDetail = (AccountDetail) mapTo(entity);
+                    AccountDetail accountDetail = mapToDetail(entity);
                     accountDetail.setCustomer(getCustomer(entity.getCustomerId()));
                     return accountDetail;
                 })
@@ -127,6 +127,18 @@ public class AccountService {
         accountRequest.setMinorIndicator(accountEntity.getMinorIndicator());
 
         return accountRequest;
+    }
+
+    private AccountDetail mapToDetail(AccountEntity accountEntity) {
+        AccountDetail accountDetail = new AccountDetail();
+        accountDetail.setAccountId(accountEntity.getAccountId());
+        accountDetail.setAccountType(accountEntity.getAccountType());
+        accountDetail.setOpenDate(accountEntity.getOpenDate());
+        accountDetail.setCustomerName(accountEntity.getCustomerName());
+        accountDetail.setBranch(accountEntity.getBranch());
+        accountDetail.setMinorIndicator(accountEntity.getMinorIndicator());
+
+        return accountDetail;
     }
 
     private String minorIndicator(Date dob) {
