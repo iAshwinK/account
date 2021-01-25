@@ -1,5 +1,5 @@
 server.port: 8010
-eureka.client.serviceUrl.defaultZone: https://ashwin-discovery-service.herokuapp.com/
+eureka.client.serviceUrl.defaultZone: https://ashwin-discovery-service.herokuapp.com/eureka
 spring:
   application.name: account-service
   datasource:
